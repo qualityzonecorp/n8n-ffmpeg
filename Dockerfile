@@ -9,3 +9,4 @@ RUN apk update && apk add ffmpeg
 
 # Switch back to default n8n user
 USER node
+EXPOSE 5678
