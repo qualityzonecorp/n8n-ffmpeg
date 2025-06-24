@@ -1,0 +1,10 @@
+{
+  "plugins": {
+    "volumes": [
+      {
+        "mountPath": "/home/node/.n8n",
+        "name": "n8n-data"
+      }
+    ]
+  }
+}
