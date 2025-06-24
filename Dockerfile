@@ -1,29 +1,25 @@
-# 1. Use base Node.js image
+# Use a base Node.js image compatible with n8n
 FROM node:18
 
-# 2. Set essential environment variables
-ENV NODE_ENV=production \
-    N8N_HOST=0.0.0.0 \
-    N8N_PORT=5678 \
-    N8N_PERSONALIZATION_ENABLED=false
+# Set environment variables
+ENV NODE_ENV=production
+ENV N8N_HOST=0.0.0.0
+ENV N8N_PORT=5678
 
-# 3. Install ffmpeg, libass, curl, and bc
+# Install required packages for video rendering
 RUN apt-get update && \
     apt-get install -y ffmpeg libass9 curl bc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 4. Install n8n globally
+# Set working directory
+WORKDIR /app
+
+# Install n8n globally
 RUN npm install -g n8n
 
-# 5. Set working directory for app runtime
-WORKDIR /home/node
-
-# 6. Expose persistent data volume for credentials, workflows, binaries
-VOLUME ["/home/node/.n8n"]
-
-# 7. Expose n8n port
+# Expose the port
 EXPOSE 5678
 
-# 8. Start n8n
+# Start n8n
 CMD ["n8n"]
